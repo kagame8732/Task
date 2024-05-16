@@ -25,7 +25,7 @@ import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from 'src/auth/entities/user.entity';
 
-@ApiTags('Task - Management')
+@ApiTags('Tasks Operations')
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Controller({ path: 'tasks', version: '1' })

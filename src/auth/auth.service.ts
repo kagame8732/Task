@@ -2,7 +2,6 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
-  UnauthorizedException
 } from '@nestjs/common';
 import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
 import { UserEntity } from './entities/user.entity';
