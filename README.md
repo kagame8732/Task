@@ -22,7 +22,7 @@ Follow these steps to get started:
 
 3. **Environment Setup**
    - Create a `.env` file in the root directory.
-   - Provide necessary database values in the `.env` file. Refer to `env-example-document` for guidance.
+   - Provide necessary database values in the `.env` file. Refer to `.env-example` for guidance.
 4. **Database Configuration**
    - Set up a local database or utilize a cloud service like [ElephantSQL](https://www.elephantsql.com/).
 
@@ -42,15 +42,15 @@ Once the application is running, you can utilize the following API endpoints to 
 - **User Login:** `.Endpoint to authenticate a user.`
 
 ### Task Endpoints
-- **Create Task:** `.Endpoint to add a new task.`
-- **Get All Tasks:** `.Endpoint to retrieve all tasks.`
-- **Get Task:** `.Endpoint to retrieve a specific task by ID.`
-- **Update Task:** `.Endpoint to update a task.`
-- **Delete Task:** `.Endpoint to delete a task.`
+- **Create a task:** `POST /tasks/create :Create a new task`
+- **Get All tasks:** `GET /tasks/get-all :Retrieve all tasks`
+- **Get a single task:** `GET /tasks/get-one/{task-id} :Retrieve a single task`
+- **Update a task:** `PUT /tasks/update/{task-id} :Update a single task`
+- **Delete task:** `DELETE /tasks/delete/{task-id} :Delete a single task`
 
 ## Testing
 
-To explore the available API endpoints and run tests, visit the Swagger UI at `http://localhost:<APP_PORT>/docs#/`. Replace `<APP_PORT>` with the port number specified in your `.env` file.
+To explore the available API endpoints and run tests, visit the Swagger UI at `http://localhost:<PORT>/docs#/`. Replace `<PORT>` with the port number specified in your `.env` file.
 
 
 

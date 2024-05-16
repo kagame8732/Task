@@ -1,8 +1,7 @@
 import {
   HttpException,
   HttpStatus,
-  Injectable,
-  NotFoundException
+  Injectable
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Equal, IsNull, Repository } from 'typeorm';
