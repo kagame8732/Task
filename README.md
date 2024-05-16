@@ -1,4 +1,4 @@
-# Task-Tracker
+# Task
 
 A task tracker application built with NestJS.
  
