@@ -11,8 +11,6 @@ import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
 import validationOptions from './utils/validation-options';
 import { AllConfigType } from './config/config.type';
-import * as express from 'express';
-import * as path from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
@@ -34,7 +32,7 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
   const options = new DocumentBuilder()
-    .setTitle("TASKS API")
+    .setTitle('TASKS API')
     .setDescription('API docs')
     .setVersion('1.0')
     .addBearerAuth()

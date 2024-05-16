@@ -1,5 +1,11 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { IsString, Length, IsOptional, IsEnum, IsNotEmpty } from 'class-validator';
+import {
+  IsString,
+  Length,
+  IsOptional,
+  IsEnum,
+  IsNotEmpty
+} from 'class-validator';
 
 enum TaskStatus {
   OPEN = 'OPEN',
