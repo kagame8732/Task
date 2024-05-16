@@ -41,6 +41,7 @@ Once the application is running, you can utilize the following API endpoints to 
 - **User Signup:** `POST /user/signup :Create a new user`
 - **User Login:** `POST /user/login :login with existing user`
 
+
 ### Task Endpoints
 - **Create a task:** `POST /tasks/create :Create a new task`
 - **Get All tasks:** `GET /tasks/get-all :Retrieve all tasks`
