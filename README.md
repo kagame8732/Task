@@ -41,12 +41,13 @@ Once the application is running, you can utilize the following API endpoints to 
 - **User Signup:** `POST /user/signup :Create a new user`
 - **User Login:** `POST /user/login :login with existing user`
 
+
 ### Task Endpoints
 - **Create a task:** `POST /tasks/create :Create a new task`
 - **Get All tasks:** `GET /tasks/get-all :Retrieve all tasks`
-- **Get a single task:** `GET /tasks/get-one/{task-id} :Retrieve a single task`
-- **Update a task:** `PUT /tasks/update/{task-id} :Update a single task`
-- **Delete task:** `DELETE /tasks/delete/{task-id} :Delete a single task`
+- **Get a single task:** `GET /tasks/get-one/{taskId} :Retrieve a single task`
+- **Update a task:** `PUT /tasks/update/{taskId} :Update a single task`
+- **Delete task:** `DELETE /tasks/delete/{taskId} :Delete a single task`
 
 ## Testing
 
