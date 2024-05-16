@@ -1,8 +1,4 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-} from '@nestjs/common';
+import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
 import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
 import { UserEntity } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -30,12 +26,11 @@ export class AuthService {
   async register(
     createUserDto: AuthRegisterLoginDto
   ): Promise<UserEntity | ErrorResponse> {
-    await validateOrReject(plainToClass(AuthRegisterLoginDto, createUserDto));
     const existingUser = await this.usersRepository.findOne({
       where: { email: createUserDto.email }
     });
     if (existingUser) {
-      throw new HttpException('User already exists', HttpStatus.CONFLICT);
+      throw new BadRequestException('User already exists');
     }
 
     const hashedPassword = await hashSync(createUserDto.password, 10);
@@ -49,13 +44,11 @@ export class AuthService {
   }
 
   async login(loginDto: AuthEmailLoginDto): Promise<LoginResponseType> {
-    await validateOrReject(plainToClass(AuthEmailLoginDto, loginDto));
-
     const user = await this.usersRepository.findOne({
       where: { email: loginDto.email }
     });
     if (!user) {
-      throw new HttpException('User does not exist', HttpStatus.NOT_FOUND);
+      throw new BadRequestException('User does not exist');
     }
 
     const isMatch = await compare(
@@ -63,7 +56,7 @@ export class AuthService {
       user.password ? user.password : ''
     );
     if (!isMatch) {
-      throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
+      throw new BadRequestException('Invalid credentials');
     }
 
     const payload = { email: user.email, sub: user.id, id: user.id };

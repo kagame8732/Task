@@ -4,25 +4,25 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
 import { AuthEmailLoginDto } from './dto/auth-email-login.dto';
 
-@ApiTags('Authentication')
+@ApiTags('Auth')
 @Controller({
-  path: 'auth/user',
+  path: 'auth',
   version: '1'
 })
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('/signup')
+  @Post('user-signup/signup')
   @HttpCode(HttpStatus.OK)
   async register(@Body() createUserDto: AuthRegisterLoginDto) {
     await this.authService.register(createUserDto);
 
     return {
-      message: 'User created successfully'
+      message: 'User created successfull!'
     };
   }
 
-  @Post('/login')
+  @Post('user-login/login')
   @HttpCode(HttpStatus.OK)
   async login(@Body() loginDto: AuthEmailLoginDto) {
     const result = await this.authService.login(loginDto);
