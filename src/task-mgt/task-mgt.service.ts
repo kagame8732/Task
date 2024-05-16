@@ -1,7 +1,8 @@
 import {
-  HttpException,
+  BadRequestException,
   HttpStatus,
-  Injectable
+  Injectable,
+  NotFoundException
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Equal, IsNull, Repository } from 'typeorm';
@@ -24,15 +25,12 @@ export class TaskMgtService {
     });
 
     if (existingTask) {
-      throw new HttpException(
-        'A task with this title already exists.',
-        HttpStatus.BAD_REQUEST
-      );
+      throw new BadRequestException('A task with this title already exists.');
     }
 
     const user = await this.userRepository.findOne({ where: { id: userId } });
     if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      throw new BadRequestException('User not found');
     }
 
     const newTask = this.taskRepository.create({
@@ -50,7 +48,7 @@ export class TaskMgtService {
   ): Promise<Task[]> {
     const user = await this.userRepository.findOne({ where: { id: userId } });
     if (!user) {
-      throw new HttpException('User does not exist', HttpStatus.NOT_FOUND);
+      throw new BadRequestException('User does not exist');
     }
 
     const skip = (page - 1) * pageSize;
@@ -65,7 +63,7 @@ export class TaskMgtService {
   async findOne(taskId: string, userId: string): Promise<Task> {
     const user = await this.userRepository.findOne({ where: { id: userId } });
     if (!user) {
-      throw new HttpException('User does not exist', HttpStatus.NOT_FOUND);
+      throw new BadRequestException('User does not exist');
     }
 
     const task = await this.taskRepository.findOne({
@@ -73,7 +71,7 @@ export class TaskMgtService {
     });
 
     if (!task) {
-      throw new HttpException('Task does not exist', HttpStatus.NOT_FOUND);
+      throw new BadRequestException('Task does not exist');
     }
 
     return task;
@@ -86,17 +84,14 @@ export class TaskMgtService {
   ): Promise<Task> {
     const user = await this.userRepository.findOne({ where: { id: userId } });
     if (!user) {
-      throw new HttpException('User does not exist', HttpStatus.NOT_FOUND);
+      throw new BadRequestException('User does not exist');
     }
 
     const tasker = await this.taskRepository.findOne({
       where: { id: taskId }
     });
     if (!tasker || tasker.userId !== user.id) {
-      throw new HttpException(
-        'Unauthorized to update this task',
-        HttpStatus.FORBIDDEN
-      );
+      throw new BadRequestException('Unauthorized to update this task');
     }
 
     await this.taskRepository.update(taskId, updateTaskDto);
@@ -105,7 +100,7 @@ export class TaskMgtService {
       where: { id: taskId }
     });
     if (!updatedTask) {
-      throw new HttpException('Task does not exist', HttpStatus.NOT_FOUND);
+      throw new BadRequestException('Task does not exist');
     }
 
     return updatedTask;
@@ -114,25 +109,22 @@ export class TaskMgtService {
   async delete(taskId: string, userId: string): Promise<{ message: string }> {
     const user = await this.userRepository.findOne({ where: { id: userId } });
     if (!user) {
-      throw new HttpException('User does not exist', HttpStatus.NOT_FOUND);
+      throw new BadRequestException('User does not exist');
     }
 
     const tasker = await this.taskRepository.findOne({
       where: { id: taskId }
     });
     if (!tasker) {
-      throw new HttpException('Task does not exist', HttpStatus.NOT_FOUND);
+      throw new BadRequestException('Task does not exist');
     }
 
     if (tasker.userId !== userId) {
-      throw new HttpException(
-        'Unauthorized to delete this task',
-        HttpStatus.FORBIDDEN
-      );
+      throw new BadRequestException('Unauthorized to delete this task');
     }
 
     await this.taskRepository.delete(taskId);
 
-    return { message: 'Task deleted successfully .' };
+    return { message: 'Task successfully deleted.' };
   }
 }

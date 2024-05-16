@@ -38,8 +38,8 @@ Follow these steps to get started:
 Once the application is running, you can utilize the following API endpoints to manage tasks:
 
 ### User Endpoints
-- **User Signup:** `.Endpoint to register a new user.`
-- **User Login:** `.Endpoint to authenticate a user.`
+- **User Signup:** `POST /user/signup :Create a new user`
+- **User Login:** `POST /user/login :login with existing user`
 
 ### Task Endpoints
 - **Create a task:** `POST /tasks/create :Create a new task`

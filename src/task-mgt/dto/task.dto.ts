@@ -22,8 +22,8 @@ export class CreateTaskDto {
 
   @ApiProperty({ example: 'This is a task description.' })
   @IsString()
-  @IsNotEmpty()
   @Length(1, 255)
+  @IsNotEmpty()
   description: string;
 
   @ApiProperty({ example: TaskStatus.OPEN, required: false })

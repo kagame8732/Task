@@ -1,17 +1,3 @@
-import {
-  Body,
-  Controller,
-  DefaultValuePipe,
-  Delete,
-  Get,
-  Param,
-  ParseIntPipe,
-  Post,
-  Put,
-  Query,
-  Req,
-  UseGuards
-} from '@nestjs/common';
 import { TaskMgtService } from './task-mgt.service';
 import {
   ApiBearerAuth,
@@ -24,18 +10,32 @@ import { Task } from './entities/tasksTable.entity';
 import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from 'src/auth/entities/user.entity';
+import {
+  UseGuards,
+  Controller,
+  Post,
+  Req,
+  Body,
+  Get,
+  Query,
+  DefaultValuePipe,
+  ParseIntPipe,
+  Param,
+  Put,
+  Delete
+} from '@nestjs/common';
 
-@ApiTags('Tasks Operations')
+@ApiTags('Task - Management')
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
-@Controller({ path: 'tasks', version: '1' })
+@Controller({ path: 'task-mgt', version: '1' })
 export class TaskMgtController {
   constructor(private readonly taskMgtService: TaskMgtService) {}
 
   @ApiOperation({
-    summary: 'Create a new task by user'
+    summary: 'CREATE NEW TASK BY USER'
   })
-  @Post('create')
+  @Post('create-task')
   create(
     @Req() req: Request,
     @Body() createTaskDto: CreateTaskDto
@@ -45,8 +45,8 @@ export class TaskMgtController {
     return this.taskMgtService.create(createTaskDto, userId);
   }
 
-  @ApiOperation({ summary: 'Find all tasks for authenticated user' })
-  @Get('get-all')
+  @ApiOperation({ summary: 'Find all tasks for a specific user' })
+  @Get('get-all-tasks')
   @ApiQuery({ name: 'page', required: false, example: 1 })
   @ApiQuery({ name: 'pageSize', required: false, example: 5 })
   async findAll(
@@ -58,15 +58,15 @@ export class TaskMgtController {
     return this.taskMgtService.findAll(userId, page, pageSize);
   }
 
-  @ApiOperation({ summary: 'Find one task by ID for a authenticated user' })
-  @Get('get-one/:taskId')
+  @ApiOperation({ summary: 'Find one task by ID for a specific user' })
+  @Get('get-one-task/:taskId')
   findOne(@Param('taskId') taskId: string, @Req() req: Request): Promise<Task> {
     const userId = (req.user as UserEntity).id;
     return this.taskMgtService.findOne(taskId, userId);
   }
 
-  @ApiOperation({ summary: 'Update a task for authenticated user' })
-  @Put('update/:taskId')
+  @ApiOperation({ summary: 'Update a task for a specific user' })
+  @Put('update-task/:taskId')
   update(
     @Param('taskId') taskId: string,
     @Body() updateTaskDto: UpdateTaskDto,
@@ -76,18 +76,15 @@ export class TaskMgtController {
     return this.taskMgtService.update(updateTaskDto, taskId, userId);
   }
 
-  @ApiOperation({ summary: 'Delete a task for authenticated user' })
-  @Delete('delete/:taskId')
+  @ApiOperation({ summary: 'Delete a task for a specific user' })
+  @Delete('delete-task/:taskId')
   async delete(
     @Param('taskId') taskId: string,
     @Req() req: Request
-  ): Promise<{ code: string; message: string }> {
+  ): Promise<{ message: string }> {
     const userId = (req.user as UserEntity).id;
 
-    await this.taskMgtService.delete(taskId, userId);
-    return {
-      code: 'TASK_DELETED_SUCCESSFULLY',
-      message: 'Task deleted successfully'
-    };
+    const result = await this.taskMgtService.delete(taskId, userId);
+    return result;
   }
 }
