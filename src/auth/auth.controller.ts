@@ -12,17 +12,17 @@ import { AuthEmailLoginDto } from './dto/auth-email-login.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('user-signup/signup')
+  @Post('user/signup')
   @HttpCode(HttpStatus.OK)
   async register(@Body() createUserDto: AuthRegisterLoginDto) {
     await this.authService.register(createUserDto);
 
     return {
-      message: 'User created successfull!'
+      message: 'User created successfully'
     };
   }
 
-  @Post('user-login/login')
+  @Post('user/login')
   @HttpCode(HttpStatus.OK)
   async login(@Body() loginDto: AuthEmailLoginDto) {
     const result = await this.authService.login(loginDto);

@@ -11,8 +11,6 @@ import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
 import validationOptions from './utils/validation-options';
 import { AllConfigType } from './config/config.type';
-import * as express from 'express';
-import * as path from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
@@ -33,11 +31,8 @@ async function bootstrap() {
   app.enableCors();
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
-  const staticFilesDirectory = path.resolve(__dirname, '../..', 'uploads');
-  app.use('/uploads', express.static(staticFilesDirectory));
-
   const options = new DocumentBuilder()
-    .setTitle('API')
+    .setTitle('TASKS API')
     .setDescription('API docs')
     .setVersion('1.0')
     .addBearerAuth()
