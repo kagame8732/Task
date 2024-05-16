@@ -22,7 +22,7 @@ Follow these steps to get started:
 
 3. **Environment Setup**
    - Create a `.env` file in the root directory.
-   - Provide necessary database values in the `.env` file. Refer to `env-example-document` for guidance.
+   - Provide necessary database values in the `.env` file. Refer to `.env-example` for guidance.
 4. **Database Configuration**
    - Set up a local database or utilize a cloud service like [ElephantSQL](https://www.elephantsql.com/).
 
