@@ -134,6 +134,6 @@ export class TaskMgtService {
 
     await this.taskRepository.delete(taskId);
 
-    return { message: 'Task successfully deleted.' };
+    return { message: 'Task deleted successfully .' };
   }
 }

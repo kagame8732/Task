@@ -33,11 +33,8 @@ async function bootstrap() {
   app.enableCors();
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
-  const staticFilesDirectory = path.resolve(__dirname, '../..', 'uploads');
-  app.use('/uploads', express.static(staticFilesDirectory));
-
   const options = new DocumentBuilder()
-    .setTitle('API')
+    .setTitle("TASKS API")
     .setDescription('API docs')
     .setVersion('1.0')
     .addBearerAuth()
