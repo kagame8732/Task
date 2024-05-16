@@ -25,10 +25,10 @@ import {
   Delete
 } from '@nestjs/common';
 
-@ApiTags('Task - Management')
+@ApiTags('Task Operations')
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
-@Controller({ path: 'task-mgt', version: '1' })
+@Controller({ path: 'tasks', version: '1' })
 export class TaskMgtController {
   constructor(private readonly taskMgtService: TaskMgtService) {}
 
@@ -46,7 +46,7 @@ export class TaskMgtController {
   }
 
   @ApiOperation({ summary: 'Find all tasks for a specific user' })
-  @Get('get-all-tasks')
+  @Get('get-all')
   @ApiQuery({ name: 'page', required: false, example: 1 })
   @ApiQuery({ name: 'pageSize', required: false, example: 5 })
   async findAll(
@@ -59,14 +59,14 @@ export class TaskMgtController {
   }
 
   @ApiOperation({ summary: 'Find one task by ID for a specific user' })
-  @Get('get-one-task/:taskId')
+  @Get('get-one/:taskId')
   findOne(@Param('taskId') taskId: string, @Req() req: Request): Promise<Task> {
     const userId = (req.user as UserEntity).id;
     return this.taskMgtService.findOne(taskId, userId);
   }
 
   @ApiOperation({ summary: 'Update a task for a specific user' })
-  @Put('update-task/:taskId')
+  @Put('update/:taskId')
   update(
     @Param('taskId') taskId: string,
     @Body() updateTaskDto: UpdateTaskDto,
@@ -77,7 +77,7 @@ export class TaskMgtController {
   }
 
   @ApiOperation({ summary: 'Delete a task for a specific user' })
-  @Delete('delete-task/:taskId')
+  @Delete('delete/:taskId')
   async delete(
     @Param('taskId') taskId: string,
     @Req() req: Request

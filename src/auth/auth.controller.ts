@@ -6,13 +6,13 @@ import { AuthEmailLoginDto } from './dto/auth-email-login.dto';
 
 @ApiTags('Auth')
 @Controller({
-  path: 'auth',
+  path: 'auth/user',
   version: '1'
 })
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('user-signup/signup')
+  @Post('/signup')
   @HttpCode(HttpStatus.OK)
   async register(@Body() createUserDto: AuthRegisterLoginDto) {
     await this.authService.register(createUserDto);
@@ -22,7 +22,7 @@ export class AuthController {
     };
   }
 
-  @Post('user-login/login')
+  @Post('/login')
   @HttpCode(HttpStatus.OK)
   async login(@Body() loginDto: AuthEmailLoginDto) {
     const result = await this.authService.login(loginDto);
